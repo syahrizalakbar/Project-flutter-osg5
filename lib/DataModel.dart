@@ -1,6 +1,8 @@
 
 import 'dart:convert';
 
+import 'package:http/http.dart';
+
 RootResponse rootResponseFromJson(String str) => RootResponse.fromJson(json.decode(str));
 
 String rootResponseToJson(RootResponse data) => json.encode(data.toJson());
@@ -44,3 +46,4 @@ class Meal {
     "idMeal": idMeal,
   };
 }
+
