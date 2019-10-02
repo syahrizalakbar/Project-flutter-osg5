@@ -15,9 +15,19 @@ class HomePage extends StatefulWidget{
 }
 
 class _HomeState extends State<HomePage>{
-  final List<Widget> pages =[PageHome("BreakFast"),PageHome("Desert"),PageHome("Pasta")];
+
+  final List<Widget> pages =[PageHome("BreakFast"),PageHome("Dessert"),PageHome("Pasta")];
   final PageStorageBucket bucket = PageStorageBucket();
-  _BottomNavState bottomNavState = new _BottomNavState();
+
+
+
+  void _incrementTab(index) {
+      setState(() {
+        selectedIndex = index;
+      });
+    }
+
+
   @override
   Widget build(BuildContext context) {
     print(selectedIndex);
@@ -49,11 +59,34 @@ class _HomeState extends State<HomePage>{
         child: pages[selectedIndex] ,
         bucket: bucket,
       ),
-      bottomNavigationBar:BottomNav(),
+      bottomNavigationBar:BottomNavigationBar(
+        currentIndex: selectedIndex,
+        type: BottomNavigationBarType.shifting,
+        items: [
+          BottomNavigationBarItem(
+              icon : Icon( IconData(0xe900, fontFamily: 'BreakFast'),color: Colors.orange,),
+              title: new Text("Breakfast",style: TextStyle(color: Colors.orange))
+
+          ),
+          BottomNavigationBarItem(
+              icon : Icon(const IconData(0xe900, fontFamily: 'Desert'),color: Colors.orange),
+              title: new Text("Dessert",style: TextStyle(color: Colors.orange))
+          ),
+
+          BottomNavigationBarItem(
+              icon : Icon(IconData(0xe900, fontFamily: 'Pasta'),color: Colors.orange),
+              title: new Text("Pasta",style: TextStyle(color: Colors.orange),)
+          ),
+        ],
+        onTap: (index){
+          _incrementTab(index);
+        },
+      ),
     );
 
 
   }
+
 
 }
 
@@ -62,6 +95,7 @@ class PageHome extends StatelessWidget{
   PageHome(String data){
     this.data = data;
   }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<RootResponse>(
@@ -83,6 +117,7 @@ class PageHome extends StatelessWidget{
     );
   }
 }
+
 
 class ItemView extends StatelessWidget{
   Meal meal;
@@ -113,7 +148,7 @@ class ItemView extends StatelessWidget{
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Container(
-                    margin: EdgeInsets.only(left: 16,bottom: 16),
+                    margin: EdgeInsets.all(16),
                     child: Text(meal.strMeal,style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white,fontFamily: 'Montserrat',fontSize: 14.0),),
                 )
               ],
@@ -127,48 +162,8 @@ class ItemView extends StatelessWidget{
 
 
 
-class BottomNav extends StatefulWidget{
-  @override
-  State<StatefulWidget> createState() {
-    return _BottomNavState();
-  }
-}
 
-class _BottomNavState  extends State<BottomNav>{
 
-  void _incrementTab(index) {
-    setState(() {
-     selectedIndex = index;
-    });
-  }
-  @override
-  Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: selectedIndex,
-      type: BottomNavigationBarType.shifting,
-      items: [
-        BottomNavigationBarItem(
-          icon : Icon( IconData(0xe900, fontFamily: 'BreakFast'),color: Colors.orange,),
-          title: new Text("Breakfast",style: TextStyle(color: Colors.orange))
-
-        ),
-        BottomNavigationBarItem(
-            icon : Icon(const IconData(0xe900, fontFamily: 'Desert'),color: Colors.orange),
-            title: new Text("Desert",style: TextStyle(color: Colors.orange))
-        ),
-
-        BottomNavigationBarItem(
-            icon : Icon(IconData(0xe900, fontFamily: 'Pasta'),color: Colors.orange),
-            title: new Text("Pasta",style: TextStyle(color: Colors.orange),)
-        ),
-      ],
-      onTap: (index){
-        _incrementTab(index);
-      },
-    );
-  }
-
-}
 
 Future<RootResponse> getData(String data) async{
   Response response  = await get('https://www.themealdb.com/api/json/v1/1/filter.php?c=$data');
