@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meal_catalogue/ui/About.dart';
 import 'package:meal_catalogue/ui/DetailMeal.dart';
 
 void main() => runApp(MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: DetailMeal(52772),
+      home: About(),
     );
   }
 }
