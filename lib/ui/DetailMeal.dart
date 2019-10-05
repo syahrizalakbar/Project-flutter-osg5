@@ -8,7 +8,7 @@ import 'dart:convert';
 /// ex
 /// child : DetailMeal(52772)
 class DetailMeal extends StatefulWidget {
-  final int id;
+  final String id;
 
   DetailMeal(this.id);
 
@@ -21,7 +21,7 @@ class _DetailMealState extends State<DetailMeal> {
   String titleMeal = "";
 
   Future getData() async {
-    int id = widget.id;
+    String id = widget.id;
     http.Response response = await http.get(preUri + " " + id.toString());
     if (response.statusCode == 200) return json.decode(response.body);
   }
