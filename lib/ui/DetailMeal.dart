@@ -3,11 +3,10 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
-/**
- * Masukan parameter id mealnya untuk menampilkan detail itemnya
- * ex
- * child : DetailMeal(52772)
- */
+
+/// Masukan parameter id mealnya untuk menampilkan detail itemnya
+/// ex
+/// child : DetailMeal(52772)
 class DetailMeal extends StatefulWidget {
   final int id;
 
